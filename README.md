@@ -1,0 +1,40 @@
+# 🎫 Event Management Platform Server
+
+A robust, beginner-friendly starter template built with **Express**, **Mongoose**, and **TypeScript**.
+
+## 📖 Documentation
+- [How to build from scratch](./docs/README.md)
+- [Module Development Workflow](./docs/MODULE_WORKFLOW.md)
+- [Google Gemini AI Integration](./docs/GEMINI_INTEGRATION.md)
+
+## 🛠️ Features
+- **TypeScript**: Type safety across the whole app.
+- **MVC Architecture**: Clean separation of concerns.
+- **Authentication**: Secure registration and login with `bcrypt` & `JWT`.
+- **AI Integration**: Automatic event description generation using **Google Gemini**.
+- **Mongoose Hooks**: Pre-save hashing and Post-save password stripping examples.
+- **Centralized Routing**: Easy to scale with new modules.
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Configure Environment
+Create a `.env` file in the root:
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+BCRYPT_SALT_ROUNDS=12
+JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=7d
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+### 3. Run the Server
+```bash
+npm run dev
+```
+
