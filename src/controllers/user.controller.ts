@@ -4,7 +4,7 @@ import jwt, { Secret } from 'jsonwebtoken';
 import config from '../config';
 import { User } from '../models/user.model';
 import nodemailer from "nodemailer";
-import bcrypt from 'bcrypt';
+
 
 // Register user
 const register = async (req: Request, res: Response) => {
@@ -166,7 +166,7 @@ const forgotPassword = async (req: Request, res: Response) => {
   html: `
     <h3>পাসওয়ার্ড রিসেট করতে নিচের লিঙ্কে ক্লিক করুন:</h3>
     
-    <a href="${(process.env.CLIENT_URL).replace(/\/$/, '')}/reset-password/${resetToken}" 
+    <a href="${(process.env.CLIENT_URL || 'http://localhost:3000').replace(/\/$/, '')}/reset-password/${resetToken}" 
        style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
        Reset Password
     </a>
