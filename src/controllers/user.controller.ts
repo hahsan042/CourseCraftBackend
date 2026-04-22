@@ -110,8 +110,19 @@ const getUsers = async (req: Request, res: Response) => {
 // ১. লগইন করা ইউজারের প্রোফাইল এবং কোর্স ডিটেইলস পাওয়ার জন্য
 const getMe = async (req: any, res: Response) => {
   try {
-    // এখানে .populate("courses") ব্যবহার করা হয়েছে যাতে শুধু ID না এসে কোর্সের সব তথ্য আসে
-    const user = await User.findById(req.user._id).populate("courses");
+    // ১. প্রথমেই চেক করুন req.user বা req.user._id আদেও আছে কি না
+    // কারণ মিডলওয়্যার থেকে ডাটা পাসিংয়ে সমস্যা হলে এখানে এরর দেয়
+    const userId = req.user?._id || req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: User ID missing in token (Controller level)",
+      });
+    }
+
+    // ২. ডাটাবেস থেকে ইউজার খোঁজা এবং কোর্স পপুলেট করা
+    const user = await User.findById(userId).populate("courses");
 
     if (!user) {
       return res.status(404).json({
@@ -120,12 +131,14 @@ const getMe = async (req: any, res: Response) => {
       });
     }
 
+    // ৩. সফল রেসপন্স
     res.status(200).json({
       success: true,
       message: "User profile fetched successfully",
       data: user,
     });
   } catch (err: any) {
+    // ৪. ইন্টারনাল এরর হ্যান্ডলিং
     res.status(500).json({
       success: false,
       message: "Failed to fetch profile",
